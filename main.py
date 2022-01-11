@@ -2,7 +2,7 @@ import discord
 import os
 from discord.ext import commands
 from dotenv import load_dotenv
-from discord.utils import  get
+from discord.utils import get
 from discord import FFmpegPCMAudio
 from discord import TextChannel
 from youtube_dl import YoutubeDL
@@ -16,6 +16,7 @@ intents.members = True
 @client.event
 async def on_ready():
     print('Jukebot has been booted up!')
+
 
 @client.command()
 async def play(ctx, url):
@@ -59,4 +60,5 @@ async def clear(ctx, amount=10):
     await ctx.channel.purge(limit=amount)
     await ctx.send('The messages have been cleared!')
 
+# Run the Bot
 client.run(os.getenv('TOKEN'))
