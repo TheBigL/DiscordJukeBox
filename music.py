@@ -1,11 +1,23 @@
+import asyncio
+
 import discord
 from discord.ext import commands
 import youtube_dl
+import YTDLSource
 
 
-class music(commands.Cog):
-    def __init__(self, client):
-        self.client = client
+
+
+
+
+class Music(commands.Cog):
+    def __init__(self, bot):
+        self.bot = bot
+
+
+
+
+
 
     @commands.command()
     async def ping(ctx):
@@ -26,22 +38,28 @@ class music(commands.Cog):
         await ctx.voice_client.disconnect()
 
     @commands.command("play")
-    async def play(self, ctx, url):
-        try:
-            ctx.voice_client.stop()
-            FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 '
-                                            '-reconnect_delay_max 5', 'options': '-vn'}
-            YDL_OPTIONS = {'format': 'bestaudio'}
-            vc = ctx.voice_client
+    async def play(self, ctx, *, url):
 
-            with youtube_dl.YoutubeDL(YDL_OPTIONS) as ydl:
-                info = ydl.extract_info(url, download=False)
-                url2 = info['formats'][0]['url']
-                source = await discord.FFmpegOpusAudioAudio.from_probe(url2, **FFMPEG_OPTIONS)
-                vc.play(source)
-
-        except TypeError:
+        if(url == None):
             ctx.send("You need to enter a URL before playing!")
+
+        else:
+
+            ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 '
+                                                '-reconnect_delay_max 5', 'options': '-vn'}
+            ydl_options = {'format': 'bestaudio'}
+            async with ctx.typing():
+                player = await YTDLSource.from_url(url, loop= self.bot.loop)
+                ctx.voice_client.play(player, after=lambda e: print(f'Player Error: {e}') if e else None)
+
+
+
+
+
+
+
+
+
 
     @commands.command()
     async def pause(self, ctx):
@@ -59,5 +77,3 @@ class music(commands.Cog):
         await ctx.send("Resuming ▶")
 
 
-def setup(client):
-    client.add_cog(music(client))
