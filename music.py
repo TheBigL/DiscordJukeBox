@@ -4,6 +4,7 @@ import discord
 import youtube_dl
 import yt as yt
 from discord.ext import commands
+from discord.ext.commands import bot
 
 import YTDLSource
 
@@ -85,3 +86,11 @@ class Music(commands.Cog):
         elif ctx.voice_client.is_playing():
             ctx.voice_client.stop()
 
+
+
+
+
+@bot.event
+async def on_ready():
+    print(f'Logged in as {bot.user} (ID: {bot.user.id})')
+    print('------')
