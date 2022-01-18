@@ -2,12 +2,13 @@ import asyncio
 
 import discord
 import youtube_dl
-import yt as yt
+import yt
 from discord.ext import commands
 from discord.ext.commands import bot
 
 import YTDLSource
 
+youtube_dl.utils.bug_reports_message = lambda: ''
 
 class Music(commands.Cog):
     def __init__(self, bot):
@@ -74,7 +75,6 @@ class Music(commands.Cog):
         await ctx.voice_client.disconnect()
 
     @play.before_invoke
-    @yt.before_invoke
     @stream.before_invoke
     async def ensure_voice(self, ctx):
         if ctx.voice_client is None:
@@ -90,7 +90,5 @@ class Music(commands.Cog):
 
 
 
-@bot.event
-async def on_ready():
-    print(f'Logged in as {bot.user} (ID: {bot.user.id})')
-    print('------')
+
+
