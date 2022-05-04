@@ -12,14 +12,24 @@ def setup(client):
     client.add_cog(music)
 
 
-@bot.event
-async def on_ready(ctx):
-    await ctx.send(f'Jukebot is all set! {round(client.latency * 1000)}ms')
+@bot.command("join")
+async def join(ctx):
+    if ctx.author.voice is None:
+        await ctx.send("You're currently not in a voice channel!")
+    voice_channel = ctx.author.voice.channel
+    if ctx.voice_client is None:
+        await voice_channel.connect()
+    else:
+        await ctx.voice_client.move_to(voice_channel)
 
+
+@bot.event
+async def on_ready():
     print(f"Logged in as {bot.user} ({bot.user.id})")
     print("-----")
 
-load_dotenv()
+
+load_dotenv('development.env')
 
 TOKEN = os.getenv('TOKEN')
 bot.run(TOKEN)
