@@ -13,6 +13,8 @@ def setup(client):
 
 @bot.event
 async def on_ready():
+    await ctx.send(f'Jukebot is all set! {round(client.latency * 1000)}ms')
+
     print(f"Logged in as {bot.user} ({bot.user.id})")
     print("-----")
 
