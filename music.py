@@ -10,6 +10,7 @@ import YTDLSource
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
+
 class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -85,10 +86,3 @@ class Music(commands.Cog):
                 raise commands.CommandError("Author is not connected to a voice channel.")
         elif ctx.voice_client.is_playing():
             ctx.voice_client.stop()
-
-
-
-
-
-
-

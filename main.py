@@ -1,4 +1,5 @@
 import discord
+from discord import client
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
@@ -12,7 +13,7 @@ def setup(client):
 
 
 @bot.event
-async def on_ready():
+async def on_ready(ctx):
     await ctx.send(f'Jukebot is all set! {round(client.latency * 1000)}ms')
 
     print(f"Logged in as {bot.user} ({bot.user.id})")
