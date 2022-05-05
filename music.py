@@ -19,6 +19,23 @@ class Music(commands.Cog):
     async def ping(self, ctx):
         await ctx.send('Ping!')
 
+    @commands.Cog.listener()
+    async def on_ready(self, ctx):
+        ctx.send("Jukebot is ready to rock and roll!")
+
+
+
+
+    @bot.command("join")
+    async def join(ctx):
+        if ctx.author.voice is None:
+            await ctx.send("You're currently not in a voice channel!")
+        voice_channel = ctx.author.voice.channel
+        if ctx.voice_client is None:
+            await voice_channel.connect()
+        else:
+            await ctx.voice_client.move_to(voice_channel)
+
 
 
     @commands.command()
@@ -30,7 +47,7 @@ class Music(commands.Cog):
 
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop)
-            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
+            ctx.voice_client.play(player, after=lambda e: ctx.send(f'Player error: {e}') if e else None)
 
             await ctx.send(f'Now playing {player.title}')
 
