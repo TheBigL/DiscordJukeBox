@@ -6,19 +6,16 @@ youtube_dl.utils.bug_reports_message = lambda: ''
 
 
 class Music(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot, client):
         self.bot = bot
+        self.client = client
 
     @commands.command()
     async def ping(self, ctx):
         await ctx.send('Ping!')
 
-    @commands.Cog.listener()
-    async def on_ready(self, ctx):
-        ctx.send("Jukebot is ready to rock and roll!")
-
     @commands.command("join")
-    async def join(ctx):
+    async def join(self, ctx):
         if ctx.author.voice is None:
             await ctx.send("You're currently not in a voice channel!")
         voice_channel = ctx.author.voice.channel
@@ -84,3 +81,7 @@ class Music(commands.Cog):
                 raise commands.CommandError("Author is not connected to a voice channel.")
         elif ctx.voice_client.is_playing():
             ctx.voice_client.stop()
+
+
+def setup(client):
+    client.add_cog(Music(client))
