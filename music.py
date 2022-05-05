@@ -23,10 +23,7 @@ class Music(commands.Cog):
     async def on_ready(self, ctx):
         ctx.send("Jukebot is ready to rock and roll!")
 
-
-
-
-    @bot.command("join")
+    @commands.command("join")
     async def join(ctx):
         if ctx.author.voice is None:
             await ctx.send("You're currently not in a voice channel!")
@@ -35,8 +32,6 @@ class Music(commands.Cog):
             await voice_channel.connect()
         else:
             await ctx.voice_client.move_to(voice_channel)
-
-
 
     @commands.command()
     async def disconnect(self, ctx):

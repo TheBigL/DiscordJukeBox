@@ -9,10 +9,7 @@ bot = commands.Bot(command_prefix='.', description="L's very own Jukebot", inten
 
 
 def setup(client):
-    client.add_cog(music)
-
-
-
+    client.add_cog(music(bot))
 
 
 @bot.event
