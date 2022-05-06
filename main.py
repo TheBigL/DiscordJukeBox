@@ -1,16 +1,10 @@
 import discord
-from discord import client
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-import music
+from cog import music
 
 bot = commands.Bot(command_prefix='.', description="L's very own Jukebot", intents=discord.Intents.all())
-
-
-def setup(client):
-    client.add_cog(music(bot))
-    client.load_extension("music");
 
 
 @bot.event
@@ -19,6 +13,16 @@ async def on_ready():
     print("-----")
 
 
+@bot.command()
+async def load(extension):
+    bot.load_extension(f'cog.{extension}')
+
+
+@bot.command()
+async def unload(ctx, extension):
+    bot.unload_extension(f'cog.{extension}')
+
+load(music)
 load_dotenv('development.env')
 
 TOKEN = os.getenv('TOKEN')
