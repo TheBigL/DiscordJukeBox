@@ -2,9 +2,8 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-from cog import music
 
-bot = commands.Bot(command_prefix='.', description="L's very own Jukebot", intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='.', description="L's very own Jukebox", intents=discord.Intents.all())
 
 
 @bot.event
@@ -13,17 +12,20 @@ async def on_ready():
     print("-----")
 
 
-@bot.command()
-async def load(extension):
-    bot.load_extension(f'cog.{extension}')
+async def on_load():
+    print(f"Starting to load cogs...")
+    for cog in os.listdir("cog"):
+        if cog.endswith(".py"):
+            try:
+                await bot.load_extension(f"cog.{cog.strip('py')}")
+                print("{cog} cog has been loaded")
+            except Exception as e:
+                print(e)
+                print("{cog} cog can't be loaded.")
 
 
-@bot.command()
-async def unload(ctx, extension):
-    bot.unload_extension(f'cog.{extension}')
-
-load(music)
 load_dotenv('development.env')
-
+on_ready()
+on_load()
 TOKEN = os.getenv('TOKEN')
 bot.run(TOKEN)

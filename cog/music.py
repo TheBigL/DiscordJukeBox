@@ -6,15 +6,14 @@ youtube_dl.utils.bug_reports_message = lambda: ''
 
 
 class Music(commands.Cog):
-    def __init__(self, bot, client):
+    def __init__(self, bot):
         self.bot = bot
-        self.client = client
 
     @commands.command()
     async def ping(self, ctx):
         await ctx.send('Ping!')
 
-    @commands.command("join")
+    @commands.command()
     async def join(self, ctx):
         if ctx.author.voice is None:
             await ctx.send("You're currently not in a voice channel!")
@@ -28,7 +27,7 @@ class Music(commands.Cog):
     async def disconnect(self, ctx):
         await ctx.voice_client.disconnect()
 
-    @commands.command("play")
+    @commands.command()
     async def play(self, ctx, *, url):
 
         async with ctx.typing():
