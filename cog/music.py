@@ -5,7 +5,7 @@ import YTDLSource
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 
-class Music(commands.Cog, name="Music"):
+class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

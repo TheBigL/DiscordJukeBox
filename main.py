@@ -15,7 +15,8 @@ async def on_ready():
         if cog.endswith(".py"):
             try:
                 bot.load_extension(f"cog.{cog.strip('.py')}")
-                print({cog} + " cog has been loaded")
+                message = "{} cog has been loaded"
+                print(message.format(cog.strip('.py')))
             except Exception as e:
                 print(e)
                 print("{cog} cog can't be loaded.")
