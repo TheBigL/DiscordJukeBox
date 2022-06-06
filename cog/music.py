@@ -1,5 +1,7 @@
+import discord
 import youtube_dl
 from discord.ext import commands
+
 import YTDLSource
 
 youtube_dl.utils.bug_reports_message = lambda: ''
@@ -32,12 +34,14 @@ class Music(commands.Cog):
 
     @commands.command()
     async def play(self, ctx, *, url):
-
+        # Plays a URL that YouTube_DL Supports
         async with ctx.typing():
             player = await YTDLSource.from_url(url, loop=self.bot.loop)
-            ctx.voice_client.play(player, after=lambda e: ctx.send(f'Player error: {e}') if e else None)
+            ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
-            await ctx.send(f'Now playing {player.title}')
+        await ctx.send(f'Now playing: {player.title}')
+
+
 
     @commands.command()
     async def stream(self, ctx, *, url):
