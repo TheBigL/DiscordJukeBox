@@ -1,13 +1,13 @@
 import asyncio
+
 import discord
 import youtube_dl
-from discord.ext import commands
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
 ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 '
                                     '-reconnect_delay_max 5', 'options': '-vn'}
-ydl_options = {'format': 'best-audio'}
+ydl_options = {'format': 'bestaudio/best'}
 
 ytdl = youtube_dl.YoutubeDL(ydl_options)
 
@@ -30,4 +30,4 @@ class YTDLSource(discord.PCMVolumeTransformer):
             data = data['entries'][0]
 
         filename = data['url'] if stream else ytdl.prepare_filename(data)
-        return cls(discord.FFmpegOpusAudio(filename, **ffmpeg_options), data=data)
+        return cls(discord.FFmpegPCMAudio(filename, **ffmpeg_options), data=data)

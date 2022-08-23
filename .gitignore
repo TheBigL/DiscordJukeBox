@@ -1,3 +1,4 @@
 # Ignores all the .env files
 *.env
 *.pyc
+*.webm

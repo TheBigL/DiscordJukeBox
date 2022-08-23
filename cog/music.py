@@ -2,7 +2,7 @@ import discord
 import youtube_dl
 from discord.ext import commands
 
-import YTDLSource
+from YTDLSource import YTDLSource
 
 youtube_dl.utils.bug_reports_message = lambda: ''
 
@@ -26,8 +26,6 @@ class Music(commands.Cog):
             else:
                 await ctx.voice_client.move_to(voice_channel)
 
-
-
     @commands.command()
     async def disconnect(self, ctx):
         await ctx.voice_client.disconnect()
@@ -40,8 +38,6 @@ class Music(commands.Cog):
             ctx.voice_client.play(player, after=lambda e: print(f'Player error: {e}') if e else None)
 
         await ctx.send(f'Now playing: {player.title}')
-
-
 
     @commands.command()
     async def stream(self, ctx, *, url):
