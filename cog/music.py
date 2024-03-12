@@ -1,5 +1,5 @@
 import discord
-import youtube_dl
+import YTDLSource
 from discord.ext import commands
 
 from YTDLSource import YTDLSource
